@@ -23,8 +23,10 @@ public:
         while (idx < N) {
             int numCols = min(K, N - idx);
 
-            // Create top border
-            result += createBorder(numCols, maxWidth) + "\n";
+            // Create top border for first row only
+            if (idx == 0) {
+                result += createBorder(numCols, maxWidth) + "\n";
+            }
 
             // Create content row
             result += "|";
@@ -33,12 +35,14 @@ public:
             }
             result += "\n";
 
+            // Create bottom border (serves as top border for next row)
+            result += createBorder(numCols, maxWidth);
+            if (idx + numCols < N) {
+                result += "\n";
+            }
+
             idx += numCols;
         }
-
-        // Create final bottom border
-        int lastRowCols = (N % K == 0) ? K : N % K;
-        result += createBorder(lastRowCols, maxWidth);
 
         // Print the result
         cout << result;
